@@ -36,10 +36,6 @@ void guess::openbet()
             rbet.winner = 0;
             rbet.p1 = _getrandnum(1);
             rbet.p2 = _getrandnum(2);
-            rbet.p3 = 0;
-            rbet.p4 = 0;
-            rbet.p5 = 0;
-            rbet.p6 = 0;
         });
     });
 }
@@ -78,29 +74,21 @@ void guess::reveal(const asset &bet, account_name player, const uint64_t betOn)
     bets.modify(cur_bet_itr, 0, [&](auto &rbet) {
         auto p1 = rbet.p1;
         auto p2 = rbet.p2;
-        auto p3 = _getrandnum(3);
-        auto p4 = _getrandnum(4);
-        auto p5 = _getrandnum(5);
-        auto p6 = _getrandnum(6);
         rbet.balance = bet;
         rbet.owner = player;
         rbet.betOn = betOn;
 
-        rbet.p3 = p3;
-        rbet.p4 = p4;
-        rbet.p5 = p5;
-        rbet.p6 = p6;
 
         auto balance = bet;
 
-        if (p1 == 0 || p2 == 0 || p3 == 0 || p4 == 0 || p5 == 0 || p6 == 0 || betOn == 0)
+        if (p1 == 0 || p2 == 0 || betOn == 0)
         {
             print("offerbet err");
             return;
         }
         //
-        auto s1 = p1 + p3 + p5;
-        auto s2 = p2 + p4 + p6;
+        auto s1 = p1 ;
+        auto s2 = p2 ;
         if ((s1 > s2 && betOn == 1) || (s1 < s2 && betOn == 2))
         {
             rbet.winner = 2;
@@ -170,8 +158,8 @@ void guess::deposit(account_name from, asset &qty)
 
 uint32_t guess::_getrandnum(uint32_t num)
 {
-    //1-13随机数
-    return (((uint32_t)(current_time() * num - num)) % 13) + 1;
+    //1-3随机数
+    return (((uint32_t)(current_time() * num - num)) % 3) + 1;
 }
 
 EOSIO_ABI(guess, (hi)(deposit)(openbet)(reset)(reveal))

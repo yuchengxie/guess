@@ -89,10 +89,6 @@ class guess : public eosio::contract
         uint64_t betid;
         uint64_t p1;
         uint64_t p2;
-        uint64_t p3;
-        uint64_t p4;
-        uint64_t p5;
-        uint64_t p6;
         uint64_t betOn;
         uint64_t winner;
 
@@ -102,7 +98,7 @@ class guess : public eosio::contract
 
         account_name by_owner() const { return owner; }
 
-        EOSLIB_SERIALIZE(bet, (id)(owner)(balance)(betid)(p1)(p2)(p3)(p4)(p5)(p6)(betOn)(winner))
+        EOSLIB_SERIALIZE(bet, (id)(owner)(balance)(betid)(p1)(p2)(betOn)(winner))
     };
 
     typedef eosio::multi_index<N(bet), bet,
